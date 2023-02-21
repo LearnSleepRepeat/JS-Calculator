@@ -12,12 +12,14 @@
 let result = 0;
 let num1 = undefined;
 let num2 = undefined;
+let operator = undefined;
 
 //those are temp operators (maybe) to set up the rest and get num1 and num2 manually. 
 
 
 function askNum1() {
 num1 = parseInt(prompt("Enter Num1"));
+updateCalculateField(num1,num2,operator)
 return num1;
 }
 
@@ -26,39 +28,38 @@ num2 = parseInt(prompt("Enter Num2"));
 return num2;
 }
 
-
 askNum1();
-
-let operator = undefined;
-
-
 
 const addField = document.getElementById("keyAddition");
 addField.addEventListener('click', () => {
     operator = "+"
-    askNum2()
-    operate(num1,num2,operator)
+    updateCalculateField(num1,num2,operator);
+    askNum2();
+    operate(num1,num2,operator);
 })
 
 const subtractField = document.getElementById("keySubtraction");
 subtractField.addEventListener('click', () => {
     operator = "-"
-    askNum2()
-    operate(num1,num2,operator)
+    updateCalculateField(num1,num2,operator);
+    askNum2();
+    operate(num1,num2,operator);
 })
 
 const multiplyField = document.getElementById("keyMultiplication");
 multiplyField.addEventListener('click', () => {
-    operator = "*"
-    askNum2()
+    operator = "*";
+    updateCalculateField(num1,num2,operator);
+    askNum2();
     operate(num1,num2,operator)
 })
 
 const divideField = document.getElementById("keyDivision");
 divideField.addEventListener('click', () => {
-    operator = "/"
-    askNum2()
-    operate(num1,num2,operator)
+    operator = "/";
+    updateCalculateField(num1,num2,operator);
+    askNum2();
+    operate(num1,num2,operator);
 })
 
 
@@ -77,7 +78,10 @@ function operate(num1,num2,operator) {
 
 function updateCalculateField(num1,num2,operator) {
     const calculationField = document.getElementById("calculateField");
-    calculationField.innerText = `Calculation: ${num1} ${operator} ${num2}`
+    if (num1 === undefined) {calculationField.innerText = `Calculation:`;}
+    else if (operator === undefined) {calculationField.innerText = `Calculation: ${num1}`;}
+    else if (num2 === undefined) {calculationField.innerText = `Calculation: ${num1} ${operator}`;}
+    else {calculationField.innerText = `Calculation: ${num1} ${operator} ${num2}`;}
 }
 
 function updateResultsField(num1,num2,operator) {
