@@ -18,6 +18,10 @@ let num1 = undefined;
 let num2 = undefined;
 let operator = undefined;
 
+const resultsField = document.getElementById("resultField");
+
+const reset = document.querySelector("#reset");
+reset.addEventListener("click", function() {resetAll()});
 
 document.addEventListener('keyup', (event) => {
     if (event.key >= '0' && event.key <= '9') {
@@ -33,6 +37,9 @@ document.addEventListener('keyup', (event) => {
         num2 = parseInt(num2string)
         updateResultsField(num1,num2,operator) 
     }
+    else if (event.key === "Escape") {
+        resetAll()
+    }
 });
 
 const operators = document.querySelectorAll(".operator");
@@ -45,42 +52,16 @@ function selectOperator(operation) {
     updateCalculateField(num1,num2,operator);
 }
 
-// const addField = document.getElementById("keyAddition");
-// addField.addEventListener('click', () => {
-//     operator = "+"
-//     updateCalculateField(num1,num2,operator);
-// })
-
-// const subtractField = document.getElementById("keySubtraction");
-// subtractField.addEventListener('click', () => {
-//     operator = "-"
-//     updateCalculateField(num1,num2,operator);
-// })
-
-// const multiplyField = document.getElementById("keyMultiplication");
-// multiplyField.addEventListener('click', () => {
-//     operator = "*";
-//     updateCalculateField(num1,num2,operator);
-// })
-
-// const divideField = document.getElementById("keyDivision");
-// divideField.addEventListener('click', () => {
-//     operator = "/";
-//     updateCalculateField(num1,num2,operator);
-// })
-
 const equalField = document.getElementById("keyEqual");
 equalField.addEventListener('click', () => {
-    num1 = parseInt(num1string)
-    num2 = parseInt(num2string)
-    updateResultsField(num1,num2,operator) 
+    num1 = parseInt(num1string);
+    num2 = parseInt(num2string);
+    updateResultsField(num1,num2,operator);
 })
 
-
-
 function operate(num1,num2,operator) {
-    updateCalculateField(num1,num2,operator)
-    updateResultsField(num1,num2,operator)  
+    updateCalculateField(num1,num2,operator);
+    updateResultsField(num1,num2,operator);
 }
 
 
@@ -89,14 +70,13 @@ function updateCalculateField(num1,num2,operator) {
     num1 = parseInt(num1string)
     num2 = parseInt(num2string)
     console.log(`num1string: ${num1string} , num1: ${num1}, num2string: ${num2string} , num2: ${num2}`)
-    if (num1 === undefined) {calculationField.innerText = `Calculation:`;}
+    if (num1 === undefined || isNaN(num1)) {calculationField.innerText = `Calculation:`;}
     else if (operator === undefined) {calculationField.innerText = `Calculation: ${num1}`;}
     else if (num2 === undefined || isNaN(num2)) {calculationField.innerText = `Calculation: ${num1} ${operator}`;}
     else {calculationField.innerText = `Calculation: ${num1} ${operator} ${num2}`;}
 }
 
 function updateResultsField(num1,num2,operator) {
-    const resultsField = document.getElementById("resultField");
     if (operator == "+") {add(num1, num2);}
     else if (operator == "-") {subtract(num1, num2);}
     else if (operator == "*") {multiply(num1, num2);}
@@ -147,3 +127,13 @@ function divide(num1, num2) {
     return result
 }
 
+function resetAll() {
+    result = 0;
+    num1string = "";
+    num2string = "";
+    num1 = undefined;
+    num2 = undefined;
+    operator = undefined;
+    updateCalculateField(num1,num2,operator)
+    resultsField.innerText = "Result:"
+}
