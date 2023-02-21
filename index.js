@@ -10,28 +10,29 @@
 // functions for the 4 basic operations. only 2 digits are added at once! no brackets or order-rules (all operations have the same priority!)
 
 let result = 0;
+let num1string = "";
 let num1 = undefined;
 let num2 = undefined;
 let operator = undefined;
 
 //those are temp operators (maybe) to set up the rest and get num1 and num2 manually. 
 
+// function askNum1() {
+// num1 = parseInt(prompt("Enter Num1"));
+// updateCalculateField(num1,num2,operator)
+// return num1;
+// }
 
-function askNum1() {
-num1 = parseInt(prompt("Enter Num1"));
-updateCalculateField(num1,num2,operator)
-return num1;
-}
+// function askNum2() {
+// num2 = parseInt(prompt("Enter Num2"));
+// return num2;
+// }
 
-function askNum2() {
-num2 = parseInt(prompt("Enter Num2"));
-return num2;
-}
-
-askNum1();
+// askNum1();
 
 const addField = document.getElementById("keyAddition");
 addField.addEventListener('click', () => {
+    num1 = parseInt(num1string)
     operator = "+"
     updateCalculateField(num1,num2,operator);
     askNum2();
@@ -68,11 +69,6 @@ divideField.addEventListener('click', () => {
 function operate(num1,num2,operator) {
     updateCalculateField(num1,num2,operator)
     updateResultsField(num1,num2,operator)  
-    
-    
-    // update the calculatefield
-    // do the calculation
-    // update the resultsfield
 }
 
 
@@ -96,7 +92,26 @@ function updateResultsField(num1,num2,operator) {
 }
 
 
+// numberEntry: 
+//     click a number button: btn becomes num1String + updateCalculateField
+//     2nd number button: add to num1string 
+//     repeat
+// once user clicks any operator-field: 
+//     parse string to integer and save as num1 (or num2 if num1!=undefined)
 
+const numbers = document.querySelectorAll(".number");
+numbers.forEach(function(number) {
+    number.addEventListener("click", () => {
+        num1string += number.id;        
+        console.log(num1string)
+        });
+    })
+
+
+    
+function numberEntry(key) {
+    
+}
 
 function add(num1, num2) {
     result = num1 + num2;

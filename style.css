@@ -3,3 +3,11 @@
     height: 30px;
     border: 1px solid black;
 }
+
+
+.number {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+}
