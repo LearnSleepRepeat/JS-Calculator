@@ -9,6 +9,8 @@
 
 // functions for the 4 basic operations. only 2 digits are added at once! no brackets or order-rules (all operations have the same priority!)
 
+// bugs: updateResultsField : make it work if no operator / num2 is selected. and if a proper calculation is done, then reset everything. 
+
 let result = 0;
 let num1string = "";
 let num2string = "";
@@ -16,44 +18,56 @@ let num1 = undefined;
 let num2 = undefined;
 let operator = undefined;
 
-//those are temp operators (maybe) to set up the rest and get num1 and num2 manually. 
 
-// function askNum1() {
-// num1 = parseInt(prompt("Enter Num1"));
-// updateCalculateField(num1,num2,operator)
-// return num1;
-// }
+document.addEventListener('keyup', (event) => {
+    if (event.key >= '0' && event.key <= '9') {
+    let numberkey = event.key;
+    updateNumber(numberkey);
+    }
+    else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+        selectOperator(event.key)
+        updateCalculateField(num1,num2,operator)
+    }
+    else if (event.key === "Enter") {
+        num1 = parseInt(num1string)
+        num2 = parseInt(num2string)
+        updateResultsField(num1,num2,operator) 
+    }
+});
 
-// function askNum2() {
-// num2 = parseInt(prompt("Enter Num2"));
-// return num2;
-// }
-
-// askNum1();
-
-const addField = document.getElementById("keyAddition");
-addField.addEventListener('click', () => {
-    operator = "+"
-    updateCalculateField(num1,num2,operator);
+const operators = document.querySelectorAll(".operator");
+operators.forEach(function(operation) {
+    operation.addEventListener("click", function() {selectOperator(operation.id)});
 })
 
-const subtractField = document.getElementById("keySubtraction");
-subtractField.addEventListener('click', () => {
-    operator = "-"
+function selectOperator(operation) {
+    operator = operation
     updateCalculateField(num1,num2,operator);
-})
+}
 
-const multiplyField = document.getElementById("keyMultiplication");
-multiplyField.addEventListener('click', () => {
-    operator = "*";
-    updateCalculateField(num1,num2,operator);
-})
+// const addField = document.getElementById("keyAddition");
+// addField.addEventListener('click', () => {
+//     operator = "+"
+//     updateCalculateField(num1,num2,operator);
+// })
 
-const divideField = document.getElementById("keyDivision");
-divideField.addEventListener('click', () => {
-    operator = "/";
-    updateCalculateField(num1,num2,operator);
-})
+// const subtractField = document.getElementById("keySubtraction");
+// subtractField.addEventListener('click', () => {
+//     operator = "-"
+//     updateCalculateField(num1,num2,operator);
+// })
+
+// const multiplyField = document.getElementById("keyMultiplication");
+// multiplyField.addEventListener('click', () => {
+//     operator = "*";
+//     updateCalculateField(num1,num2,operator);
+// })
+
+// const divideField = document.getElementById("keyDivision");
+// divideField.addEventListener('click', () => {
+//     operator = "/";
+//     updateCalculateField(num1,num2,operator);
+// })
 
 const equalField = document.getElementById("keyEqual");
 equalField.addEventListener('click', () => {
@@ -91,14 +105,6 @@ function updateResultsField(num1,num2,operator) {
 
     resultsField.innerText = `Result: ${result.toFixed(5).replace(/\.00000$/, "")}`
 }
-
-
-// numberEntry: 
-//     click a number button: btn becomes num1String + updateCalculateField
-//     2nd number button: add to num1string 
-//     repeat
-// once user clicks any operator-field: 
-//     parse string to integer and save as num1 (or num2 if num1!=undefined)
 
 const numbers = document.querySelectorAll(".number");
 numbers.forEach(function(number) {
