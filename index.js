@@ -11,6 +11,7 @@
 
 let result = 0;
 let num1string = "";
+let num2string = "";
 let num1 = undefined;
 let num2 = undefined;
 let operator = undefined;
@@ -32,37 +33,34 @@ let operator = undefined;
 
 const addField = document.getElementById("keyAddition");
 addField.addEventListener('click', () => {
-    num1 = parseInt(num1string)
     operator = "+"
     updateCalculateField(num1,num2,operator);
-    askNum2();
-    operate(num1,num2,operator);
 })
 
 const subtractField = document.getElementById("keySubtraction");
 subtractField.addEventListener('click', () => {
     operator = "-"
     updateCalculateField(num1,num2,operator);
-    askNum2();
-    operate(num1,num2,operator);
 })
 
 const multiplyField = document.getElementById("keyMultiplication");
 multiplyField.addEventListener('click', () => {
     operator = "*";
     updateCalculateField(num1,num2,operator);
-    askNum2();
-    operate(num1,num2,operator)
 })
 
 const divideField = document.getElementById("keyDivision");
 divideField.addEventListener('click', () => {
     operator = "/";
     updateCalculateField(num1,num2,operator);
-    askNum2();
-    operate(num1,num2,operator);
 })
 
+const equalField = document.getElementById("keyEqual");
+equalField.addEventListener('click', () => {
+    num1 = parseInt(num1string)
+    num2 = parseInt(num2string)
+    updateResultsField(num1,num2,operator) 
+})
 
 
 
@@ -74,9 +72,12 @@ function operate(num1,num2,operator) {
 
 function updateCalculateField(num1,num2,operator) {
     const calculationField = document.getElementById("calculateField");
+    num1 = parseInt(num1string)
+    num2 = parseInt(num2string)
+    console.log(`num1string: ${num1string} , num1: ${num1}, num2string: ${num2string} , num2: ${num2}`)
     if (num1 === undefined) {calculationField.innerText = `Calculation:`;}
     else if (operator === undefined) {calculationField.innerText = `Calculation: ${num1}`;}
-    else if (num2 === undefined) {calculationField.innerText = `Calculation: ${num1} ${operator}`;}
+    else if (num2 === undefined || isNaN(num2)) {calculationField.innerText = `Calculation: ${num1} ${operator}`;}
     else {calculationField.innerText = `Calculation: ${num1} ${operator} ${num2}`;}
 }
 
@@ -101,17 +102,24 @@ function updateResultsField(num1,num2,operator) {
 
 const numbers = document.querySelectorAll(".number");
 numbers.forEach(function(number) {
-    number.addEventListener("click", () => {
-        num1string += number.id;        
-        console.log(num1string)
-        });
-    })
+    number.addEventListener("click", function() {updateNumber(number.id)});
+})
 
 
-    
-function numberEntry(key) {
-    
+function updateNumber(number) {
+    if (operator === undefined) {
+    num1string += number;
+    updateCalculateField(num1,num2,operator)        
+    console.log(`num1string: ${num1string} , num1: ${num1}, num2string: ${num2string} , num2: ${num2}`)
+    }
+    else {
+    num2string += number;
+    updateCalculateField(num1,num2,operator)        
+    console.log(`num1string: ${num1string} , num1: ${num1}, num2string: ${num2string} , num2: ${num2}`)
+    }
 }
+
+
 
 function add(num1, num2) {
     result = num1 + num2;

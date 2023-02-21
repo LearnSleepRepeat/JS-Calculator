@@ -4,6 +4,13 @@
     border: 1px solid black;
 }
 
+.equal {
+    width: 80px;
+    height: 30px;
+    border: 1px solid black;
+
+}
+
 
 .number {
     display: inline-block;
