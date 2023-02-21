@@ -15,21 +15,32 @@ reset.addEventListener("click", function() {resetAll()});
 document.addEventListener('keydown', (event) => {
     if (event.key >= '0' && event.key <= '9') {
     let numberkey = event.key;
+    document.getElementById(numberkey).classList.add("active")
     updateNumber(numberkey);
     }
     else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
         selectOperator(event.key)
+        document.getElementById(event.key).classList.add("active")
         updateCalculateField(num1,num2,operator)
     }
     else if (event.key === "Enter") {
         num1 = parseInt(num1string)
         num2 = parseInt(num2string)
+        document.getElementById("keyEqual").classList.add("active")
         updateResultsField(num1,num2,operator) 
     }
     else if (event.key === "Escape") {
         resetAll()
     }
 });
+
+document.addEventListener('keyup', (event) => {
+const elementsToRemoveActive = document.querySelectorAll('div.number, div.operator, div.equal, div.dot');
+elementsToRemoveActive.forEach(element => {
+    element.classList.remove("active");
+});
+})
+
 
 const operators = document.querySelectorAll(".operator");
 operators.forEach(function(operation) {
