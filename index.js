@@ -1,14 +1,3 @@
-// what is the specific flow? 
-// a) enter num1
-// b) enter operator
-// c) enter num2
-// d) press enter/equal sign [currently not yet needed]
-// d) update calculationField
-// e) update resultField
-
-
-// functions for the 4 basic operations. only 2 digits are added at once! no brackets or order-rules (all operations have the same priority!)
-
 // bugs: updateResultsField : make it work if no operator / num2 is selected. and if a proper calculation is done, then reset everything. 
 
 let result = 0;
@@ -23,7 +12,7 @@ const resultsField = document.getElementById("resultField");
 const reset = document.querySelector("#reset");
 reset.addEventListener("click", function() {resetAll()});
 
-document.addEventListener('keyup', (event) => {
+document.addEventListener('keydown', (event) => {
     if (event.key >= '0' && event.key <= '9') {
     let numberkey = event.key;
     updateNumber(numberkey);
@@ -69,7 +58,6 @@ function updateCalculateField(num1,num2,operator) {
     const calculationField = document.getElementById("calculateField");
     num1 = parseInt(num1string)
     num2 = parseInt(num2string)
-    console.log(`num1string: ${num1string} , num1: ${num1}, num2string: ${num2string} , num2: ${num2}`)
     if (num1 === undefined || isNaN(num1)) {calculationField.innerText = `Calculation:`;}
     else if (operator === undefined) {calculationField.innerText = `Calculation: ${num1}`;}
     else if (num2 === undefined || isNaN(num2)) {calculationField.innerText = `Calculation: ${num1} ${operator}`;}
@@ -96,12 +84,10 @@ function updateNumber(number) {
     if (operator === undefined) {
     num1string += number;
     updateCalculateField(num1,num2,operator)        
-    console.log(`num1string: ${num1string} , num1: ${num1}, num2string: ${num2string} , num2: ${num2}`)
     }
     else {
     num2string += number;
     updateCalculateField(num1,num2,operator)        
-    console.log(`num1string: ${num1string} , num1: ${num1}, num2string: ${num2string} , num2: ${num2}`)
     }
 }
 
