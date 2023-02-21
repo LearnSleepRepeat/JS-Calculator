@@ -2,50 +2,71 @@
 // a) enter num1
 // b) enter operator
 // c) enter num2
-// d) press enter/equal sign
+// d) press enter/equal sign [currently not yet needed]
 // d) update calculationField
 // e) update resultField
 
 
 // functions for the 4 basic operations. only 2 digits are added at once! no brackets or order-rules (all operations have the same priority!)
 
-let result = 0
+let result = 0;
+let num1 = undefined;
+let num2 = undefined;
 
-let num1 = prompt("Enter Num1");
-let num2 = prompt("Enter Num2");
-alert("click on the desired operator");
+//those are temp operators (maybe) to set up the rest and get num1 and num2 manually. 
 
-let operator = "+";
+
+function askNum1() {
+num1 = parseInt(prompt("Enter Num1"));
+return num1;
+}
+
+function askNum2() {
+num2 = parseInt(prompt("Enter Num2"));
+return num2;
+}
+
+
+askNum1();
+
+let operator = undefined;
 
 
 
 const addField = document.getElementById("keyAddition");
 addField.addEventListener('click', () => {
-    operator = "addition"
+    operator = "+"
+    askNum2()
+    operate(num1,num2,operator)
 })
 
 const subtractField = document.getElementById("keySubtraction");
 subtractField.addEventListener('click', () => {
-    operator = "subtraction"
+    operator = "-"
+    askNum2()
+    operate(num1,num2,operator)
 })
 
 const multiplyField = document.getElementById("keyMultiplication");
 multiplyField.addEventListener('click', () => {
-    operator = "multiplication"
+    operator = "*"
+    askNum2()
+    operate(num1,num2,operator)
 })
 
 const divideField = document.getElementById("keyDivision");
 divideField.addEventListener('click', () => {
-    operator = "division"
+    operator = "/"
+    askNum2()
+    operate(num1,num2,operator)
 })
 
 
-operate(num1,num2,operator)
+
 
 function operate(num1,num2,operator) {
     updateCalculateField(num1,num2,operator)
-
-    
+    updateResultsField(num1,num2,operator)  
     
     
     // update the calculatefield
@@ -56,7 +77,18 @@ function operate(num1,num2,operator) {
 
 function updateCalculateField(num1,num2,operator) {
     const calculationField = document.getElementById("calculateField");
-    calculationField.innerText = `${num1} ${operator} ${num2}`
+    calculationField.innerText = `Calculation: ${num1} ${operator} ${num2}`
+}
+
+function updateResultsField(num1,num2,operator) {
+    const resultsField = document.getElementById("resultField");
+    if (operator == "+") {add(num1, num2);}
+    else if (operator == "-") {subtract(num1, num2);}
+    else if (operator == "*") {multiply(num1, num2);}
+    else if (operator == "/") {divide(num1, num2);}
+    else {alert("Sorry, there was an error and operator doesn't fit into any category!");}
+
+    resultsField.innerText = `Result: ${result.toFixed(5).replace(/\.00000$/, "")}`
 }
 
 
