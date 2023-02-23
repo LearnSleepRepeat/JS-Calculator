@@ -12,17 +12,14 @@
         <h1>JS Calculator</h1>  
         <p></p>
 
-        <div style="border: 1px solid black; border-radius: 15px; padding: 15px; width: 350px">
+        <div class="outerborder">
 
-        <div id="reset" class="reset">Reset</div>
-        <p></p>
+          
+        <div class="calculateAndResetLine">
+          <div id="calculateField"></div><div id="reset" class="reset">A/C</div>
+        </div>  
 
-
-        <!-- <div id="resultField" style="border: 1px solid black; height: 40px; width: 280px; visibility: hidden;"></div> -->
-        <p></p>
-        <div id="calculateField" style="border: 1px solid black; height: 40px; width: 280px"></div>
-
-        <p></p>
+        
 
         <div class="calculator">
           <div class="row">
@@ -50,29 +47,7 @@
             <div id="/" class="operator">/</div>
           </div>
         </div>
-
-
-        <!-- <div id="0" class="number">0</div>
-        <div id="1" class="number">1</div>
-        <div id="2" class="number">2</div>
-        <div id="3" class="number">3</div>
-        <div id="4" class="number">4</div>
-        <div id="5" class="number">5</div>
-        <div id="6" class="number">6</div>
-        <div id="7" class="number">7</div>
-        <div id="8" class="number">8</div>
-        <div id="9" class="number">9</div>
-        
-        <p></p>
-
-        <div id="+" class="operator">Add</div>
-        <div id="-" class="operator">Subtract</div>
-        <div id="*" class="operator">Multiply</div>
-        <div id="/" class="operator">Divide</div>
-        <p></p>
-
-        <div id="keyEqual" class="equal">=
-        </div> -->
+      </div>
     </main>
 	<script src="index.js"></script>
   </body>

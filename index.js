@@ -37,13 +37,14 @@ document.addEventListener('keydown', (event) => {
         updateResultsField(num1,num2,operator) 
     }
     else if (event.key === "Escape") {
-        resetAll()
+        resetAll();
+        document.getElementById("reset").classList.add("active")
     }
 });
 
 // remove hover effect when button isn't pressed anymore
 document.addEventListener('keyup', (event) => {
-const elementsToRemoveActive = document.querySelectorAll('div.number, div.operator, div.equal, div.dot');
+const elementsToRemoveActive = document.querySelectorAll('div.number, div.operator, div.equal, div.dot, div.reset');
 elementsToRemoveActive.forEach(element => {
     element.classList.remove("active");
 });
