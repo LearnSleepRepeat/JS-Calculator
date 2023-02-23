@@ -76,13 +76,20 @@ function updateCalculateField(num1,num2,operator) {
 }
 
 function updateResultsField(num1,num2,operator) {
-    if (operator == "+") {add(num1, num2);}
+    if (num1 === undefined || isNaN(num1) || operator === undefined || num2 === undefined || isNaN(num2)) {
+        resetAll();
+        return alert("You need to enter two numbers and select an operator before you can ask for a result.");
+        }
+    else if (operator == "+") {add(num1, num2);}
     else if (operator == "-") {subtract(num1, num2);}
     else if (operator == "*") {multiply(num1, num2);}
     else if (operator == "/") {divide(num1, num2);}
-    else {alert("Sorry, there was an error and operator doesn't fit into any category!");}
-
-    resultsField.innerText = `Result: ${result.toFixed(5).replace(/\.00000$/, "")}`
+    resultsField.innerText = `Result: ${result.toFixed(5).replace(/\.00000$/, "")}`;
+    num1 = num1string = result;
+    num2string = "";
+    num2 = undefined;
+    operator = undefined;
+    updateCalculateField(num1,num2,operator)
 }
 
 const numbers = document.querySelectorAll(".number");
