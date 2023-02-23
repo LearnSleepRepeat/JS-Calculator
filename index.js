@@ -1,4 +1,6 @@
-// bugs: updateResultsField : make it work if no operator / num2 is selected. and if a proper calculation is done, then reset everything. 
+// bugs & improvement potentials: if you enter a float, the numbers after the period only appear when the value is different from its parsed value. so "9.0004" will stay as "9" 
+// in the display field until you enter the last digit" (reason is that the display uses "ParseFloat" to display the value and "parseFloat("9.000") is 9)
+// it will also be slightly wanky if you press the period several times while entering a number.
 
 let result = 0;
 let num1string = "";
@@ -7,7 +9,7 @@ let num1 = undefined;
 let num2 = undefined;
 let operator = undefined;
 
-const resultsField = document.getElementById("resultField");
+//const resultsField = document.getElementById("resultField");
 
 const reset = document.querySelector("#reset");
 reset.addEventListener("click", function() {resetAll()});
@@ -18,14 +20,19 @@ document.addEventListener('keydown', (event) => {
     document.getElementById(numberkey).classList.add("active")
     updateNumber(numberkey);
     }
+    else if (event.key === "."){
+    let numberkey = ".";
+    document.getElementById(numberkey).classList.add("active")
+    updateNumber(numberkey);
+    }
     else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
         selectOperator(event.key)
         document.getElementById(event.key).classList.add("active")
         updateCalculateField(num1,num2,operator)
     }
     else if (event.key === "Enter") {
-        num1 = parseInt(num1string)
-        num2 = parseInt(num2string)
+        num1 = parseFloat(num1string)
+        num2 = parseFloat(num2string)
         document.getElementById("keyEqual").classList.add("active")
         updateResultsField(num1,num2,operator) 
     }
@@ -34,6 +41,7 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// remove hover effect when button isn't pressed anymore
 document.addEventListener('keyup', (event) => {
 const elementsToRemoveActive = document.querySelectorAll('div.number, div.operator, div.equal, div.dot');
 elementsToRemoveActive.forEach(element => {
@@ -54,8 +62,8 @@ function selectOperator(operation) {
 
 const equalField = document.getElementById("keyEqual");
 equalField.addEventListener('click', () => {
-    num1 = parseInt(num1string);
-    num2 = parseInt(num2string);
+    num1 = parseFloat(num1string);
+    num2 = parseFloat(num2string);
     updateResultsField(num1,num2,operator);
 })
 
@@ -67,12 +75,12 @@ function operate(num1,num2,operator) {
 
 function updateCalculateField(num1,num2,operator) {
     const calculationField = document.getElementById("calculateField");
-    num1 = parseInt(num1string)
-    num2 = parseInt(num2string)
-    if (num1 === undefined || isNaN(num1)) {calculationField.innerText = `Calculation:`;}
-    else if (operator === undefined) {calculationField.innerText = `Calculation: ${num1}`;}
-    else if (num2 === undefined || isNaN(num2)) {calculationField.innerText = `Calculation: ${num1} ${operator}`;}
-    else {calculationField.innerText = `Calculation: ${num1} ${operator} ${num2}`;}
+    num1 = parseFloat(num1string)
+    num2 = parseFloat(num2string)
+    if (num1 === undefined || isNaN(num1)) {calculationField.innerText = ``;}
+    else if (operator === undefined) {calculationField.innerText = `${num1}`;}
+    else if (num2 === undefined || isNaN(num2)) {calculationField.innerText = `${num1} ${operator}`;}
+    else {calculationField.innerText = `${num1} ${operator} ${num2}`;}
 }
 
 function updateResultsField(num1,num2,operator) {
@@ -84,8 +92,8 @@ function updateResultsField(num1,num2,operator) {
     else if (operator == "-") {subtract(num1, num2);}
     else if (operator == "*") {multiply(num1, num2);}
     else if (operator == "/") {divide(num1, num2);}
-    resultsField.innerText = `Result: ${result.toFixed(5).replace(/\.00000$/, "")}`;
-    num1 = num1string = result;
+    //resultsField.innerText = `${result.toFixed(5).replace(/\.00000$/, "")}`;
+    num1 = num1string = result.toFixed(5).replace(/\.00000$/, "");
     num2string = "";
     num2 = undefined;
     operator = undefined;
@@ -96,6 +104,9 @@ const numbers = document.querySelectorAll(".number");
 numbers.forEach(function(number) {
     number.addEventListener("click", function() {updateNumber(number.id)});
 })
+
+const dot = document.getElementById(".");
+dot.addEventListener("click", function() {updateNumber(".")});
 
 
 function updateNumber(number) {
@@ -139,5 +150,5 @@ function resetAll() {
     num2 = undefined;
     operator = undefined;
     updateCalculateField(num1,num2,operator)
-    resultsField.innerText = "Result:"
+    //resultsField.innerText = ""
 }
